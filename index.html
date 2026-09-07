@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>امتحان الطب والتغذية - اكمال الفراغات</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background: rgba(255,255,255,0.3);
+            margin-top: 15px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: #4CAF50;
+            transition: width 0.3s;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            background: #f5f5f5;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .stat-item h3 {
+            color: #667eea;
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        
+        .stat-item p {
+            color: #666;
+            font-size: 12px;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .question-card {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: #f9f9f9;
+            border-right: 5px solid #667eea;
+            border-radius: 5px;
+        }
+        
+        .question-number {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        
+        .question-text {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .answer-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: border-color 0.3s;
+        }
+        
+        .answer-input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+        
+        .answer-input.correct {
+            border-color: #4CAF50;
+            background: #f1f8f4;
+        }
+        
+        .answer-input.incorrect {
+            border-color: #f44336;
+            background: #fdeeed;
+        }
+        
+        .hint {
+            font-size: 12px;
+            color: #999;
+            margin-top: 8px;
+            font-style: italic;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+        
+        .btn-submit {
+            background: #667eea;
+            color: white;
+            flex: 1;
+            min-width: 150px;
+        }
+        
+        .btn-submit:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-reset {
+            background: #f44336;
+            color: white;
+            flex: 1;
+            min-width: 150px;
+        }
+        
+        .btn-reset:hover {
+            background: #da190b;
+            transform: translateY(-2px);
+        }
+        
+        .results {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        .results.show {
+            display: block;
+        }
+        
+        .result-score {
+            font-size: 60px;
+            color: #667eea;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        
+        .result-message {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        .result-details {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        
+        .result-details p {
+            margin: 8px 0;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 20px;
+            }
+            
+            .stats {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .buttons {
+                flex-direction: column;
+            }
+            
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏥 امتحان الطب والتغذية</h1>
+            <p>اكمل الفراغات بالإجابات الصحيحة</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <h3 id="currentQuestion">1</h3>
+                <p>السؤال الحالي</p>
+            </div>
+            <div class="stat-item">
+                <h3 id="totalQuestions">30</h3>
+                <p>إجمالي الأسئلة</p>
+            </div>
+            <div class="stat-item">
+                <h3 id="score">0</h3>
+                <p>النقاط</p>
+            </div>
+        </div>
+        
+        <div class="content" id="quizContent">
+            <!-- سيتم ملء الأسئلة هنا -->
+        </div>
+        
+        <div class="results" id="results">
+            <h2>تم انتهاء الامتحان! ✅</h2>
+            <div class="result-score" id="finalScore">0%</div>
+            <div class="result-message" id="resultMessage"></div>
+            <div class="result-details">
+                <p>عدد الإجابات الصحيحة: <strong id="correctCount">0</strong> من <strong id="totalCount">30</strong></p>
+                <p>النسبة المئوية: <strong id="percentage">0%</strong></p>
+            </div>
+        </div>
+        
+        <div class="buttons" id="buttonContainer">
+            <button class="btn-submit" onclick="checkAnswers()">تحقق من الإجابات</button>
+            <button class="btn-reset" onclick="resetQuiz()">إعادة تعيين</button>
+        </div>
+    </div>
+    
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
